@@ -154,11 +154,13 @@ class FileIO:
             lst_Inventory.append(new_cd)
             return lst_Inventory
         """
+       
         try:
+            lst_Inventory.clear()  # this clears existing data and allows to load data from file
             with open(file_name, 'r') as objFile: 
-                for attributes in objFile:
-                    cd_attributes = (attributes.cd_id, attributes.cd_title, attributes.cd_artist)
-                    lst_Inventory.clear()  # this clears existing data and allows to load data from file
+                for row in objFile:
+                    lstRow = row.strip().split(",")
+                    cd_attributes = CD(lstRow[0], lstRow[1], lstRow[2])
                     lst_Inventory.append(cd_attributes)
             objFile.close()
         except FileNotFoundError as err:
